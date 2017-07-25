@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 import nbody.moving.BouncingMovement;
+import nbody.moving.GravityMovement;
 
 public class Simulation {
    public static final int FRAME = 600;
@@ -43,20 +44,31 @@ public class Simulation {
          //int randomNum = rand.nextInt((max - min) + 1) + min;
          bodies = new ArrayList<Body>(5);
          
-         int r = (int)(Math.random() * 20 + 10);
-         double rho = Math.random() * 10 + 1;
-         bodies.add(new ConstantDensityBody(new Coordinates(100.0, 100.0), r, rho, new BouncingMovement()));
-         
-         r = (int)(Math.random() * 20 + 10);
-         rho = Math.random() * 10 + 1;
-         bodies.add(new ConstantDensityBody(new Coordinates(100.0, 100.0), r, rho, new BouncingMovement()));
-         
-         r = (int)(Math.random() * 20 + 10);
-         rho = Math.random() * 10 + 1;
-         bodies.add(new ConstantDensityBody(new Coordinates(100.0, 100.0), r, rho, new BouncingMovement()));
+         //bodies.add(newRandomizedBouncer());
+         //bodies.add(newRandomizedBouncer());
+         //bodies.add(newRandomizedBouncer());
+         bodies.add(newRandomizedGravity());
+         bodies.add(newRandomizedGravity());
+         bodies.add(newRandomizedGravity());
 
          timer = new Timer(DT, new SimulationListener());
          timer.start();
+      }
+
+      private Body newRandomizedGravity() {
+         int r = (int)(Math.random() * 20 + 10);
+         double rho = Math.random() * 1 + 0.5;
+         int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
+         int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
+         return new ConstantDensityBody(new Coordinates(x, y), r, rho, new GravityMovement()); 
+      }
+
+      private Body newRandomizedBouncer() {
+         int r = (int)(Math.random() * 20 + 10);
+         double rho = Math.random() * 1 + 0.5;
+         int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
+         int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
+         return new ConstantDensityBody(new Coordinates(x, y), r, rho, new BouncingMovement()); 
       }
 
       public void paintComponent(Graphics g) {

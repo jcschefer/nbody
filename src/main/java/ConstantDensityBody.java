@@ -33,4 +33,19 @@ public class ConstantDensityBody implements Body {
       myBuffer.setColor(c);
       myBuffer.fillOval((int)(coordinates.getX() - getRadius()), (int)(coordinates.getY()-getRadius()), (int)(2*getRadius()), (int)(2*getRadius()));
    }
+
+   public boolean equals(Object o) {
+      if (!(o instanceof ConstantDensityBody)) {
+         throw new ClassCastException();
+      }
+
+      ConstantDensityBody ob = (ConstantDensityBody)o;
+      return radius == ob.getRadius()
+             && coordinates.getX() == ob.getCoordinates().getX()
+             && coordinates.getY() == ob.getCoordinates().getY()
+             && getMass() == ob.getMass()
+             && movingAbility.equals(ob.getMovingAbility());
+   }
+
+   public MovingAbility getMovingAbility() { return movingAbility; }
 }
