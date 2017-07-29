@@ -19,6 +19,8 @@ public class Simulation {
       frame.setLocation(100, 50);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       SimulationPanel panel = new SimulationPanel();
+      panel.setFocusable(true);
+      panel.requestFocus();
       frame.setContentPane(panel);
       frame.setVisible(true);
    }
@@ -51,13 +53,15 @@ public class Simulation {
          bodies.add(newRandomizedGravity());
          bodies.add(newRandomizedGravity());
 
+         this.addKeyListener(new SimulationKeyListener());
+
          timer = new Timer(DT, new SimulationListener());
          timer.start();
       }
 
       private Body newRandomizedGravity() {
          int r = (int)(Math.random() * 20 + 10);
-         double rho = Math.random() * 1 + 0.5;
+         double rho = Math.random() * 3 + 1;
          int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
          int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
          return new ConstantDensityBody(new Coordinates(x, y), r, rho, new GravityMovement()); 
@@ -65,7 +69,7 @@ public class Simulation {
 
       private Body newRandomizedBouncer() {
          int r = (int)(Math.random() * 20 + 10);
-         double rho = Math.random() * 1 + 0.5;
+         double rho = Math.random() * 3 + 1;
          int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
          int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
          return new ConstantDensityBody(new Coordinates(x, y), r, rho, new BouncingMovement()); 
@@ -94,6 +98,17 @@ public class Simulation {
             
             repaint();
          }
+      }
+
+      private class SimulationKeyListener implements KeyListener {
+         public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_Q) {
+               System.exit(0);
+            }
+         }
+
+         public void keyTyped(KeyEvent e) {}
+         public void keyReleased(KeyEvent e) {}
       }
    }
 }
