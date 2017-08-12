@@ -7,11 +7,10 @@ import java.awt.image.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
-import nbody.moving.BouncingMovement;
-import nbody.moving.GravityMovement;
+import nbody.moving.CenterOfMassMovement;
 
 public class Simulation {
-   public static final int FRAME = 600;
+   public static final int FRAME = 900;
 
    public static void main(String[] args) {
       JFrame frame = new JFrame("Simulation");
@@ -34,10 +33,13 @@ public class Simulation {
 
       private static final Color BACKGROUND = Color.BLACK;
       private static final Color BODY_COLOR = Color.WHITE;
-      private final int DT = 5;
+      private final int DT_MILLIS = 5;
 
       public SimulationPanel() {
-         bufferedImage = new BufferedImage(FRAME, FRAME, BufferedImage.TYPE_INT_RGB);
+         bufferedImage = new BufferedImage(
+				FRAME, 
+				FRAME, 
+				BufferedImage.TYPE_INT_RGB);
          graphics = bufferedImage.getGraphics();
          graphics.setColor(BACKGROUND);
          graphics.fillRect(0, 0, FRAME, FRAME);
@@ -46,33 +48,21 @@ public class Simulation {
          //int randomNum = rand.nextInt((max - min) + 1) + min;
          bodies = new ArrayList<Body>(5);
          
-         //bodies.add(newRandomizedBouncer());
-         //bodies.add(newRandomizedBouncer());
-         //bodies.add(newRandomizedBouncer());
-         bodies.add(newRandomizedGravity());
-         bodies.add(newRandomizedGravity());
-         bodies.add(newRandomizedGravity());
+         //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
+         //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
+         //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
+         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+
+			bodies.add(new TrackingBody(new CenterOfMassMovement()));
 
          this.addKeyListener(new SimulationKeyListener());
 
-         timer = new Timer(DT, new SimulationListener());
+			// TODO - have it execute when all bodies are done moving instead of 
+			//			 constant interval
+         timer = new Timer(DT_MILLIS, new SimulationListener());
          timer.start();
-      }
-
-      private Body newRandomizedGravity() {
-         int r = (int)(Math.random() * 20 + 10);
-         double rho = Math.random() * 3 + 1;
-         int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
-         int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
-         return new ConstantDensityBody(new Coordinates(x, y), r, rho, new GravityMovement()); 
-      }
-
-      private Body newRandomizedBouncer() {
-         int r = (int)(Math.random() * 20 + 10);
-         double rho = Math.random() * 3 + 1;
-         int x = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
-         int y = (int)(Math.random() * (FRAME - 2 * r - 2) + r + 1);
-         return new ConstantDensityBody(new Coordinates(x, y), r, rho, new BouncingMovement()); 
       }
 
       public void paintComponent(Graphics g) {
@@ -81,7 +71,7 @@ public class Simulation {
 
       void updateLocations() {
          for (Body b : bodies) {
-            b.move(bodies, DT);
+            b.move(bodies, DT_MILLIS * 0.001);
             b.draw(graphics, BODY_COLOR);
          }
       }
@@ -93,7 +83,12 @@ public class Simulation {
             graphics.fillRect(0, 0, FRAME, FRAME);
 
             for (Body b : bodies) {
-               b.draw(graphics, BODY_COLOR);
+					Color c = BODY_COLOR;
+					if (b instanceof TrackingBody) {
+						c = Color.YELLOW;
+					}
+					
+               b.draw(graphics, c);
             }
             
             repaint();
@@ -104,6 +99,17 @@ public class Simulation {
          public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_Q) {
                System.exit(0);
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_I) {
+               for (Body b : bodies) {
+						System.out.printf(
+							"%s\nvx: %f\tvy: %f\nmass: %f\n\n", 
+							b.getCoordinates().toString(),
+							b.getMovingAbility().getVX(),
+							b.getMovingAbility().getVY(),
+							b.getMass());
+					}
             }
          }
 

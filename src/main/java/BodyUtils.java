@@ -2,9 +2,8 @@ package nbody;
 
 public class BodyUtils {
    public static double distance(Body one, Body two) {
-      return Math.sqrt(
-         (two.getCoordinates().getX() - one.getCoordinates().getX()) * (two.getCoordinates().getX() - one.getCoordinates().getX()) + 
-         (two.getCoordinates().getY() - one.getCoordinates().getY()) * (two.getCoordinates().getY() - one.getCoordinates().getY())  
-      );
+		double dx = two.getCoordinates().getX() - one.getCoordinates().getX();
+		double dy = two.getCoordinates().getY() - one.getCoordinates().getY();
+      return Math.sqrt(dx * dx + dy * dy);
    }
 }
