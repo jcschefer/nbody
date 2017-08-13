@@ -58,7 +58,8 @@ public class Simulation {
 			//bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
 			//bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
 			for (int i = 0; i < numBodies; i++) {
-				bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+				bodies.add(
+					ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
 			}
 
 			bodies.add(new ConstantDensityBody(
@@ -77,8 +78,8 @@ public class Simulation {
 
 			this.addKeyListener(new SimulationKeyListener());
 
-			// TODO - have it execute when all bodies are done moving instead of 
-			//			 constant interval
+			// TODO - have it execute when all bodies are done moving instead 
+			//			of constant interval
 			timer = new Timer(DT_MILLIS, new SimulationListener());
 			timer.start();
 		}
@@ -122,11 +123,11 @@ public class Simulation {
 				if (e.getKeyCode() == KeyEvent.VK_I) {
 					for (Body b : bodies) {
 						System.out.printf(
-								"%s\nvx: %f\tvy: %f\nmass: %f\n\n", 
-								b.getCoordinates().toString(),
-								b.getMovingAbility().getVX(),
-								b.getMovingAbility().getVY(),
-								b.getMass());
+							"%s\nvx: %f\tvy: %f\nmass: %f\n\n", 
+							b.getCoordinates().toString(),
+							b.getMovingAbility().getVX(),
+							b.getMovingAbility().getVY(),
+							b.getMass());
 					}
 				}
 			}

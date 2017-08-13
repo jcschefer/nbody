@@ -25,12 +25,14 @@ public class BouncingMovement implements MovingAbility {
 		Coordinates coordinates = current.getCoordinates();
 
 		if (coordinates.getX() <= current.getRadius() 
-				|| coordinates.getX() >= Simulation.FRAME - current.getRadius()) {
+			|| coordinates.getX() >= Simulation.FRAME - current.getRadius())
+		{
 			px *= -1.0;
 		}
 
 		if (coordinates.getY() <= current.getRadius() 
-				|| coordinates.getY() >= Simulation.FRAME - current.getRadius()) {
+			|| coordinates.getY() >= Simulation.FRAME - current.getRadius()) 
+		{
 			py *= -1.0;
 		}
 
