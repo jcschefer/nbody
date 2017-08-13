@@ -1,4 +1,4 @@
-package nbody;
+package nbody.main;
 
 //TODO only import what's needed
 import java.awt.*;
@@ -7,17 +7,23 @@ import java.awt.image.*;
 import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
+import nbody.Coordinates;
+import nbody.bodies.Body;
+import nbody.bodies.TrackingBody;
+import nbody.bodies.ConstantDensityBody;
 import nbody.moving.CenterOfMassMovement;
+import nbody.moving.GravityMovement;
 
 public class Simulation {
-   public static final int FRAME = 900;
+   public static final int FRAME = 1000;
+	public static final int NUM_BODIES = 10;
 
    public static void main(String[] args) {
       JFrame frame = new JFrame("Simulation");
       frame.setSize(FRAME, FRAME);
       frame.setLocation(100, 50);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      SimulationPanel panel = new SimulationPanel();
+      SimulationPanel panel = new SimulationPanel(NUM_BODIES);
       panel.setFocusable(true);
       panel.requestFocus();
       frame.setContentPane(panel);
@@ -35,7 +41,7 @@ public class Simulation {
       private static final Color BODY_COLOR = Color.WHITE;
       private final int DT_MILLIS = 5;
 
-      public SimulationPanel() {
+      public SimulationPanel(int numBodies) {
          bufferedImage = new BufferedImage(
 				FRAME, 
 				FRAME, 
@@ -51,9 +57,21 @@ public class Simulation {
          //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
          //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
          //bodies.add(ConstantDensityBody.newRandomizedBouncer(FRAME, FRAME));
-         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
-         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
-         bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+			for (int i = 0; i < numBodies; i++) {
+				bodies.add(ConstantDensityBody.newRandomizedGravity(FRAME, FRAME));
+			}
+
+			bodies.add(new ConstantDensityBody(
+				new Coordinates(400, 500),
+				30,
+				2.0,
+				new GravityMovement()));
+
+			bodies.add(new ConstantDensityBody(
+				new Coordinates(600, 500),
+				30,
+				2.0,
+				new GravityMovement()));
 
 			bodies.add(new TrackingBody(new CenterOfMassMovement()));
 

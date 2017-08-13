@@ -1,9 +1,10 @@
-package nbody;
+package nbody.bodies;
 
 import java.util.List;
 // TODO - remove graphics/colors stuff from Body interface
 import java.awt.Graphics;
 import java.awt.Color;
+import nbody.Coordinates;
 import nbody.moving.MovingAbility;
 import nbody.moving.BouncingMovement;
 import nbody.moving.GravityMovement;

@@ -1,8 +1,8 @@
 package nbody.moving;
 
 import nbody.Coordinates;
-import nbody.Body;
-import nbody.Simulation;
+import nbody.bodies.Body;
+import nbody.main.Simulation;
 import java.util.List;
 
 public class BouncingMovement implements MovingAbility {

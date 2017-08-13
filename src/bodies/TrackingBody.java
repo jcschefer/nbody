@@ -1,8 +1,9 @@
-package nbody;
+package nbody.bodies;
 
 import java.util.List;
 import java.awt.Graphics;
 import java.awt.Color;
+import nbody.Coordinates;
 import nbody.moving.MovingAbility;
 import nbody.moving.CenterOfMassMovement;
 

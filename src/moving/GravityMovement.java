@@ -1,7 +1,7 @@
 package nbody.moving;
 
 import nbody.Coordinates;
-import nbody.Body;
+import nbody.bodies.Body;
 import nbody.BodyUtils;
 import java.util.List;
 

@@ -1,9 +1,10 @@
-package nbody;
+package nbody.bodies;
 
 import java.util.List;
 import java.awt.Graphics;
 import java.awt.Color;
 import nbody.moving.MovingAbility;
+import nbody.Coordinates;
 
 public interface Body {
    Coordinates getCoordinates();

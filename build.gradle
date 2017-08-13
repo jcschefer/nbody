@@ -1,9 +1,18 @@
 apply plugin: 'java'
 
+sourceSets {
+	main {
+		java {
+			srcDirs = ["src"]
+		}
+	}
+}
+
 jar {
    manifest {
       attributes(
-         'Main-Class': 'nbody.Simulation'   
-      )
+         'Main-Class': 'nbody.main.Simulation',
+			'Class-Path': configurations.compile.files.collect { it.gettName() }.join(' ')
+		)
    }
 }
