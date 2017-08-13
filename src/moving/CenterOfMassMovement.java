@@ -5,7 +5,7 @@ import nbody.bodies.Body;
 import java.util.List;
 
 public class CenterOfMassMovement implements MovingAbility {
-   public Coordinates newCoordinates(
+	public Coordinates newCoordinates(
 		Body current, 
 		List<Body> bodies, 
 		double dt)
@@ -13,7 +13,7 @@ public class CenterOfMassMovement implements MovingAbility {
 		double totalMass = bodies.stream()
 			.mapToDouble(Body::getMass)
 			.sum();
-		
+
 		double xMoment = bodies.stream()
 			.mapToDouble(b -> b.getMass() * b.getCoordinates().getX())
 			.sum();
@@ -24,7 +24,7 @@ public class CenterOfMassMovement implements MovingAbility {
 
 		return new Coordinates(xMoment / totalMass, yMoment / totalMass);
 	}
-	
+
 	public double getVX() { return 0.0; }
 	public double getVY() { return 0.0; }
 }

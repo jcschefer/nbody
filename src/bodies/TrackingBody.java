@@ -27,13 +27,13 @@ public class TrackingBody implements Body {
 		coordinates = movement.newCoordinates(this, bodies, dt); 
 	}
 
-   @Override
-   public void draw(Graphics myBuffer, Color c) {
-      myBuffer.setColor(c);
-      myBuffer.fillOval(
-			(int)(coordinates.getX() - getRadius()), 
-			(int)(coordinates.getY()-getRadius()), 
-			(int)(2*getRadius()), 
-			(int)(2*getRadius()));
-   }
+	@Override
+	public void draw(Graphics myBuffer, Color c) {
+		myBuffer.setColor(c);
+		myBuffer.fillOval(
+				(int)(coordinates.getX() - getRadius()), 
+				(int)(coordinates.getY()-getRadius()), 
+				(int)(2*getRadius()), 
+				(int)(2*getRadius()));
+	}
 } 

@@ -7,10 +7,10 @@ import nbody.moving.MovingAbility;
 import nbody.Coordinates;
 
 public interface Body {
-   Coordinates getCoordinates();
-   int getRadius();
-   double getMass();
+	Coordinates getCoordinates();
+	int getRadius();
+	double getMass();
 	MovingAbility getMovingAbility();
-   void move(List<Body> bodies, double dt);
-   void draw(Graphics myBuffer, Color c);
+	void move(List<Body> bodies, double dt);
+	void draw(Graphics myBuffer, Color c);
 }
